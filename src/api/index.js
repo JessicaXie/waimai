@@ -15,3 +15,12 @@ export const reqShops = ({latitude, longitude}) => ajax('/api/shops', {latitude,
 
 // 发送手机验证码
 export const sendCode = (phone) => ajax('/api/sendcode', {phone})
+
+// 发送密码登录
+export const loginPwd = ({name, pwd}) => ajax('/api/login_pwd', {name, pwd}, 'POST')
+
+// 发送短信登录
+export const loginSms = ({phone, code}) => ajax('/api/login_sms', {phone, code}, 'POST')
+
+// 发送短信登录
+export const logout = () => ajax('/api/logout')

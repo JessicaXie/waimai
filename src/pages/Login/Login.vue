@@ -39,11 +39,11 @@
               </section>
               <section class="login_message">
                 <input type="text" maxlength="11" placeholder="验证码">
-                <img class="get_verification" src="./captcha.svg" alt="captcha" @click="changeCapcha">
+                <img class="get_verification" src="http://localhost:4000/captcha?" alt="captcha" @click="changeCapcha">
               </section>
             </section>
           </div>
-          <button class="login_submit">登录</button>
+          <button class="login_submit" @click="login">登录</button>
         </form>
         <a href="javascript:;" class="about_us">关于我们</a>
       </div>
@@ -99,7 +99,19 @@ export default {
     },
     // 切换验证图片
     changeCapcha (event) {
-      event.target.src = 'http://localhost:4000/captcha?time' + new Date()
+      event.target.src = 'http://localhost:4000/captcha?time' + Date.now()
+    },
+    // 登录
+    login () {
+      // 这里是前台验证：先要知道是那种登录方式
+      if (this.LoginWay) { // loginWay:true是短信登录
+        // 验证的信息有：手机号是否是手机号的格式，验证码是否是6位数值
+        if (!this.isTruePhone) {
+          // 这里要提示手机号码格式不对
+        } else if (/^\b{6}$/.test(this.code)) {
+          // 这里提示验证码不对
+        }
+      }
     }
   }
 }
