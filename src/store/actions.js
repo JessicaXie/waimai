@@ -11,7 +11,9 @@ import {
   RECEIVE_ADDRESS,
   RECEIVE_CATEGORYS,
   RECEIVE_SHOPS,
-  RECEIVE_USER
+  RECEIVE_USER,
+  INCREMENT_FOOD_COUNT,
+  DECREMENT_FOOD_COUNT
 } from './mutation-types'
 
 export default {
@@ -47,5 +49,13 @@ export default {
   // 同步保存用户user
   saveUser ({commit}, user) {
     commit(RECEIVE_USER, {user})
+  },
+  // 同步更新food的数量
+  updataFoodCount ({commit}, {isAdd, food}) {
+    if (isAdd) {
+      commit(INCREMENT_FOOD_COUNT, {food})
+    } else {
+      commit(DECREMENT_FOOD_COUNT, {food})
+    }
   }
 }
