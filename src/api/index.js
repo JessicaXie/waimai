@@ -17,10 +17,10 @@ export const reqShops = ({latitude, longitude}) => ajax('/api/shops', {latitude,
 export const sendCode = (phone) => ajax('/api/sendcode', {phone})
 
 // 发送密码登录
-export const loginPwd = ({name, pwd}) => ajax('/api/login_pwd', {name, pwd}, 'POST')
+export const loginPwd = ({name, pwd, capcha}) => ajax('/api/login_pwd', name, pwd, capcha, 'POST')
 
 // 发送短信登录
 export const loginSms = ({phone, code}) => ajax('/api/login_sms', {phone, code}, 'POST')
 
-// 发送短信登录
+// 发送退出登录
 export const logout = () => ajax('/api/logout')

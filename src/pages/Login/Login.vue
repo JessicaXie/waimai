@@ -56,7 +56,8 @@
 </template>
 
 <script>
-import {sendCode} from '../../api'
+import {MessageBox} from 'mint-ui'
+import {sendCode, loginPwd, loginSms} from '../../api'
 export default {
   data () {
     return {
@@ -65,7 +66,7 @@ export default {
       LoginWay: false, // 短信：true，密码：false
       showPWD: false, // 是否显示密码
       code: '', // 短信验证码
-      capcha: '', // 短信验证码
+      capcha: '', // 图形验证码
       name: '', // 用户名
       pwd: '' // 密码
     }
@@ -102,15 +103,43 @@ export default {
       event.target.src = 'http://localhost:4000/captcha?time' + Date.now()
     },
     // 登录
-    login () {
-      // 这里是前台验证：先要知道是那种登录方式
-      if (this.LoginWay) { // loginWay:true是短信登录
+    async login () {
+      let result
+      const {LoginWay, isTruePhone, code, name, pwd, capcha, phone} = this
+      // 这里是前台验证(静态页面验证)：先要知道是那种登录方式
+      if (LoginWay) { // loginWay:true是短信登录
         // 验证的信息有：手机号是否是手机号的格式，验证码是否是6位数值
-        if (!this.isTruePhone) {
+        if (!isTruePhone) {
           // 这里要提示手机号码格式不对
-        } else if (/^\b{6}$/.test(this.code)) {
+          console.log('手机号码有误！')
+          return MessageBox.alert('请输入正确手机号')
+        } else if (!/^\d{6}$/.test(code)) {
           // 这里提示验证码不对
+          return MessageBox.alert('请输入正确验证码')
         }
+        // 前台验证成功，发送请求
+        result = await loginSms({phone, code})
+      } else { // 这里是密码登录
+        // 判断验证码是否是4位，密码和name不能为空
+        if (!name.trim() || !pwd.trim()) {
+          // 这里要提示手机号码格式不对
+          return MessageBox.alert('请输入用户名不能为空')
+        } else if (!/^.{4}$/.test(capcha)) {
+          // 这里要提示验证码不对
+          return MessageBox.alert('验证码不正确')
+        }
+        // 前台验证成功，发送请求
+        result = await loginPwd({name, pwd, capcha})
+      }
+      // 得到最后返回的结果
+      if (result.code === 0) {
+        // 将得到的信息保存到状态数据中（及更新start）
+        const user = result.data
+        this.$store.dispatch('saveUser', user)
+        // 跳转到个人中心界面
+        this.$router.replace('/profile')
+      } else {
+        MessageBox.alert(result.msg)
       }
     }
   }
