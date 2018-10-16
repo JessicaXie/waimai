@@ -8,6 +8,9 @@ import {
   RECEIVE_SHOPS,
   RECEIVE_USER,
   INCREMENT_FOOD_COUNT,
+  RECEIVE_RATING,
+  RECEIVE_INFO,
+  RECEIVE_GOODS,
   DECREMENT_FOOD_COUNT
 } from './mutation-types'
 
@@ -24,6 +27,16 @@ export default {
   [RECEIVE_USER] (state, {user}) {
     state.user = user
   },
+  [RECEIVE_GOODS] (state, {goods}) {
+    state.goods = goods
+  },
+  [RECEIVE_INFO] (state, {info}) {
+    state.info = info
+  },
+  [RECEIVE_RATING] (state, {user}) {
+    state.user = user
+  },
+
   [INCREMENT_FOOD_COUNT] (state, {food}) {
     if (food.count) {
       food.count++

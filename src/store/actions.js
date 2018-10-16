@@ -4,7 +4,10 @@
 import {
   reqAddress,
   reqFoodCategorys,
-  reqShops
+  reqShops,
+  reqShopGoods,
+  reqShopInfo,
+  reqShopRating
 } from '../api'
 
 import {
@@ -13,7 +16,10 @@ import {
   RECEIVE_SHOPS,
   RECEIVE_USER,
   INCREMENT_FOOD_COUNT,
-  DECREMENT_FOOD_COUNT
+  DECREMENT_FOOD_COUNT,
+  RECEIVE_INFO,
+  RECEIVE_GOODS,
+  RECEIVE_RATING
 } from './mutation-types'
 
 export default {
@@ -44,6 +50,33 @@ export default {
       const shops = result.data
       // commit交给mutation保存state
       commit(RECEIVE_SHOPS, {shops})
+    }
+  },
+  // 异步保存商家信息
+  async getInfo ({commit}) {
+    const result = await reqShopInfo()
+    if (result.code === 0) {
+      const info = result.data
+      // commit交给mutation保存state
+      commit(RECEIVE_INFO, {info})
+    }
+  },
+  // 异步保存商品列表信息
+  async getGoods ({commit}) {
+    const result = await reqShopGoods()
+    if (result.code === 0) {
+      const goods = result.data
+      // commit交给mutation保存state
+      commit(RECEIVE_GOODS, {goods})
+    }
+  },
+  // 异步保存商家信息
+  async getRating ({commit}) {
+    const result = await reqShopRating()
+    if (result.code === 0) {
+      const rating = result.data
+      // commit交给mutation保存state
+      commit(RECEIVE_RATING, {rating})
     }
   },
   // 同步保存用户user

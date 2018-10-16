@@ -24,3 +24,18 @@ export const loginSms = ({phone, code}) => ajax('/api/login_sms', {phone, code},
 
 // 发送退出登录
 export const logout = () => ajax('/api/logout')
+
+/**
+ * 获取商家信息
+ */
+export const reqShopInfo = () => ajax('/info')
+
+/**
+ * 获取商家评价数组
+ */
+export const reqShopRating = () => ajax('/rating')
+
+/**
+ * 获取商家商品数组
+ */
+export const reqShopGoods = () => ajax('/goods')
