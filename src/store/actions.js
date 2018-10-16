@@ -71,12 +71,12 @@ export default {
     }
   },
   // 异步保存商家信息
-  async getRating ({commit}) {
+  async getRatings ({commit}) {
     const result = await reqShopRating()
     if (result.code === 0) {
-      const rating = result.data
+      const ratings = result.data
       // commit交给mutation保存state
-      commit(RECEIVE_RATING, {rating})
+      commit(RECEIVE_RATING, {ratings})
     }
   },
   // 同步保存用户user

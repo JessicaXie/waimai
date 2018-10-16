@@ -32,8 +32,10 @@ export default {
         scs.push(startHalf)
       }
       // 灰色的星星
-      if (scs.length < 5) {
-        scs.push(startOff)
+      for (let i = 0; i < 5; i++) {
+        if (scs.length < 5) {
+          scs.push(startOff)
+        }
       }
       // 返回这个数组
       return scs

@@ -33,8 +33,8 @@ export default {
   [RECEIVE_INFO] (state, {info}) {
     state.info = info
   },
-  [RECEIVE_RATING] (state, {user}) {
-    state.user = user
+  [RECEIVE_RATING] (state, {ratings}) {
+    state.ratings = ratings
   },
 
   [INCREMENT_FOOD_COUNT] (state, {food}) {
