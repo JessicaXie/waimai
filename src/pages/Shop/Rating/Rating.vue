@@ -24,13 +24,14 @@
         </div>
       </div>
       <Split/>
-      <RatingSelect/>
-
-      <!--<div>RatingSelect组件</div>-->
+      <RatingSelect :selectType="selectType"
+                    :onlyContent="onlyContent"
+                    @toggleOnlyContent="toggleOnlyContent"
+                    @setSelectType="setSelectType"/>
 
       <div class="rating-wrapper">
         <ul>
-          <li class="rating-item" v-for="(rating, index) in ratings" :key="index">
+          <li class="rating-item" v-for="(rating, index) in FilterRatings" :key="index">
             <div class="avatar">
               <img width="28" height="28" :src="rating.avatar">
             </div>
@@ -58,6 +59,12 @@ import {mapState} from 'vuex'
 import BScorll from 'better-scroll'
 import RatingSelect from '../../../components/RatingSelect/RatingSelect'
 export default {
+  data () {
+    return {
+      selectType: 0, // 评论类型： 1：不满意，0：满意，2：全部
+      onlyContent: false // 只看有评论内容的 false： 全部；true： 只有有内容的
+    }
+  },
   components: {
     RatingSelect
   },
@@ -68,7 +75,23 @@ export default {
     })
   },
   computed: {
-    ...mapState(['ratings', 'info'])
+    ...mapState(['ratings', 'info']),
+    FilterRatings () {
+      const {ratings, selectType, onlyContent} = this
+      // 这里只需要有评价或者说是只要符合基本条件的（其实根本就没有做筛选，只不过就是再次拿去数据而已）
+      return ratings.filter((rating) => {
+        const {text, rateType} = rating
+        return (selectType === 2 || selectType === rateType) && (!onlyContent || text.length > 0)
+      })
+    }
+  },
+  methods: {
+    toggleOnlyContent () {
+      this.onlyContent = !this.onlyContent
+    },
+    setSelectType (selectType) {
+      this.selectType = selectType
+    }
   }
 }
 </script>

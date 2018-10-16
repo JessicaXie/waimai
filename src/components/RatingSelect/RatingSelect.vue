@@ -1,25 +1,44 @@
 <template>
   <div class="ratingselect">
     <div class="rating-type border-1px">
-      <span class="block">
-        全部<span class="count">1</span>
+      <span class="block" :class="{active: selectType === 2}" @click="setSelectType(2)">
+        全部<span class="count">{{ratings.length}}</span>
       </span>
-      <span class="block active">
-        推荐<span class="count">1</span>
+      <span class="block" :class="{active: selectType === 0}" @click="setSelectType(0)">
+        推荐<span class="count">{{ratings.length-badRatings}}</span>
       </span>
-      <span class="block">
-        吐槽<span class="count">0</span>
+      <span class="block" :class="{active: selectType === 1}" @click="setSelectType(1)">
+        吐槽<span class="count">{{badRatings}}</span>
       </span>
     </div>
     <div class="switch on">
-      <span class="iconfont icon-check_circle"></span>
+      <span class="iconfont icon-check_circle" @click="toggleOnlyContent"></span>
       <span class="text">只看有内容的评价</span>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState, mapGetters} from 'vuex'
 export default {
+  props: {
+    onlyContent: Boolean,
+    selectType: Number
+  },
+  computed: {
+    ...mapState(['ratings']),
+    ...mapGetters(['badRatings'])
+  },
+  methods: {
+    toggleOnlyContent () {
+      // 触发vue自定义事件
+      this.$emit('toggleOnlyContent')
+    },
+    setSelectType (type) {
+      // 触发vue自定义事件
+      this.$emit('setSelectType', type)
+    }
+  }
 }
 </script>
 
