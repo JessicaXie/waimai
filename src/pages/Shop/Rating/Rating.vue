@@ -61,7 +61,7 @@ import RatingSelect from '../../../components/RatingSelect/RatingSelect'
 export default {
   data () {
     return {
-      selectType: 0, // 评论类型： 1：不满意，0：满意，2：全部
+      selectType: 2, // 评论类型： 1：不满意，0：满意，2：全部
       onlyContent: false // 只看有评论内容的 false： 全部；true： 只有有内容的
     }
   },

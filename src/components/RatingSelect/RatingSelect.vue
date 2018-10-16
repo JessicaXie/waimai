@@ -11,8 +11,8 @@
         吐槽<span class="count">{{badRatings}}</span>
       </span>
     </div>
-    <div class="switch on">
-      <span class="iconfont icon-check_circle" @click="toggleOnlyContent"></span>
+    <div class="switch" :class="{on: onlyContent}" @click="toggleOnlyContent">
+      <span class="iconfont icon-check_circle"></span>
       <span class="text">只看有内容的评价</span>
     </div>
   </div>
